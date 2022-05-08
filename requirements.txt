@@ -1,3 +1,4 @@
 flask
 pandas
-gunicorn
+jinja2
+psycopg2-binary

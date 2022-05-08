@@ -4,17 +4,15 @@ from flask import Flask, render_template
 from jinja2 import Template
 import pandas as pd
 import random
+#import gunicorn
+import os
+import psycopg2
 
-#from datetime import datetime as dt
 
 data = pd.read_csv('quotes.csv', names=['author', 'quote'])
 
-#series = pd.Series(index=range(0, len(data.index)))
-
-# for m in data.index:
-#     series.loc[data.loc[m].s:data.loc[m].e] = m
-
-#import pdb; pdb.set_trace()
+DATABASE_URL = os.environ['DATABASE_URL']
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
@@ -39,6 +37,10 @@ def api_random():
     except Exception as e:
         return{e}
     return msg.to_json()
+
+
+if __name__ == '__main__':
+    app.run(debug = True)
 
 ''' CSV
 author, quote, type[joke, quote], KA[0,1],  
