@@ -4,15 +4,11 @@ from flask import Flask, render_template
 from jinja2 import Template
 import pandas as pd
 import random
-#import gunicorn
 import os
 import psycopg2
 
-
 data = pd.read_csv('quotes.csv', names=['author', 'quote'])
 
-DATABASE_URL = os.environ['DATABASE_URL']
-conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
