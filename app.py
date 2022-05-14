@@ -11,10 +11,10 @@ import psycopg2
 
 csv_data = pd.read_csv('quotes.csv', names=['author', 'quote','ka', 'sch','tags'])
 csv_data['sch'] = pd.to_datetime(csv_data['sch'], format='%m/%d/%Y')
-csv_data['sch'] = csv_data['sch'].dt.date
+#csv_data['sch'] = csv_data['sch'].dt.date
 
-csv_dataBASE_URL = os.environ['csv_dataBASE_URL']
-conn = psycopg2.connect(csv_dataBASE_URL, sslmode='require')
+# dataBASE_URL = os.environ['csv_dataBASE_URL']
+# conn = psycopg2.connect(csv_dataBASE_URL, sslmode='require')
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
@@ -32,27 +32,55 @@ def home():
     # return "<h1>Daily Inspired</h1> \
     # <p>A curated selection of quotes to inspire your day. -KA</p>"
 
-@app.route('/random', methods=['GET'])
+@app.route('/api/random', methods=['GET'])
 def api_random():
+    
     try:
         msg = csv_data.loc[random.randint(0,len(csv_data.index))]
+    
     except Exception as e:
         return{e}
-    return msg.to_json()
+    
+    return msg.to_json(orient='records')
 
-@app.route('/qotd', methods=['GET'])
+@app.route('/api/qotd', methods=['GET'])
 def api_qotd():
+    
     try:
         today = date.today()
         today = today.strftime("%m/%d/%y")
-        msg = csv_data.loc[random.randint(0,len(csv_data.index))]
+        msg = csv_data.loc[csv_data['sch'] == today]
+        del msg['sch']
+    
     except Exception as e:
         return{e}
-    return msg.to_json()
+    
+    return msg.to_json(orient='records')
+
+@app.route('/api/ka', methods=['GET'])
+def api_ka():
+    
+    try:
+        msg = csv_data.loc[csv_data['ka'] > 0]
+        msg = msg.sample()
+        del msg['sch']
+        print(msg)
+    
+    except Exception as e:
+        return{e}
+    
+    return msg.to_json(orient='records')
 
 
 if __name__ == '__main__':
     app.run(debug = True)
+
+#> set FLASK_ENV=development
+#> flask run
+
+
+
+
 
 ''' CSV
 author, quote, type[joke, quote], KA[0,1],  
