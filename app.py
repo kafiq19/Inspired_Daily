@@ -1,28 +1,32 @@
+import os
+import random
+from datetime import date
+
 import flask
 from flask import request
 from flask import Flask, render_template
 from jinja2 import Template
 import pandas as pd
-import random
-import os
 import psycopg2
 
-data = pd.read_csv('quotes.csv', names=['author', 'quote'])
+csv_data = pd.read_csv('quotes.csv', names=['author', 'quote','ka', 'sch','tags'])
+csv_data['sch'] = pd.to_datetime(csv_data['sch'], format='%m/%d/%Y')
+csv_data['sch'] = csv_data['sch'].dt.date
 
-DATABASE_URL = os.environ['DATABASE_URL']
-conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+csv_dataBASE_URL = os.environ['csv_dataBASE_URL']
+conn = psycopg2.connect(csv_dataBASE_URL, sslmode='require')
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 
 @app.route('/', methods=['GET'])
 def home():
-    msg = data.loc[random.randint(0,len(data.index))]
+    msg = csv_data.loc[random.randint(0,len(csv_data.index))]
     quote = msg.quote
     author = msg.author
     # msg = msg.to_json()
 
-    return render_template('home.html', quote=quote , author=author,)
+    return render_template('home.html', quote=quote , author=author)
     #return Template('home.html').render(something="World")
     
     # return "<h1>Daily Inspired</h1> \
@@ -31,7 +35,17 @@ def home():
 @app.route('/random', methods=['GET'])
 def api_random():
     try:
-        msg = data.loc[random.randint(0,len(data.index))]
+        msg = csv_data.loc[random.randint(0,len(csv_data.index))]
+    except Exception as e:
+        return{e}
+    return msg.to_json()
+
+@app.route('/qotd', methods=['GET'])
+def api_qotd():
+    try:
+        today = date.today()
+        today = today.strftime("%m/%d/%y")
+        msg = csv_data.loc[random.randint(0,len(csv_data.index))]
     except Exception as e:
         return{e}
     return msg.to_json()
@@ -45,13 +59,13 @@ author, quote, type[joke, quote], KA[0,1],
 
 '''
 
-    # return data.loc[random.randint(0,len(data.index))] 
+    # return csv_data.loc[random.randint(0,len(csv_data.index))] 
 
     # quote = request.args['random']
     # try:
-    #     return data.loc[random.randint(0,len(data.index))]
+    #     return csv_data.loc[random.randint(0,len(csv_data.index))]
     # except KeyError:
-    #     return f'Invalid input ({data.index.min()} - {data.index.max()})'
+    #     return f'Invalid input ({csv_data.index.min()} - {csv_data.index.max()})'
 
 '''api.py:
 import flask
