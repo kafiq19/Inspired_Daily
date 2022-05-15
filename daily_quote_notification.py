@@ -24,14 +24,14 @@ class Daily_Quote:
         #creates a notification email
         today = datetime.date.today()
         gmail_user = 'khalfeen1@gmail.com'
-        gmail_password = 'B@l@nc3G2021'
+        gmail_password = 'bcsktrvybuopqjri'
         recipient = ['tha_realist1990@hotmail.com']
         
         msg = EmailMessage()
         msg['Subject'] = 'Daily Quote: ' + str(today)
         msg['From'] = gmail_user 
         msg['To'] = recipient 
-        msg.set_content(f'{self.quote_.quote} \n {self.quote_.author}')
+        msg.set_content(f'{self.quote_.quote} \n {self.quote_.author} \n\n inspired-daily.com')
         
         with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
             smtp.login(gmail_user, gmail_password) 
