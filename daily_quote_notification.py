@@ -10,16 +10,15 @@ from email.message import EmailMessage
 class Daily_Quote:
 
     def __init__(self):
-        self.load_data()
-        self.select_message()
-        self.notification()
+        self.csv_data = ''
+        self.quote = ''
 
     def load_data(self):
-        csv_data = pd.read_csv('quotes.csv', names=['author', 'quote','ka', 'sch','tags'], dtype={'quote': str})
-        csv_data['sch'] = pd.to_datetime(csv_data['sch'], format='%m/%d/%Y')
+        self.csv_data = pd.read_csv('quotes.csv', names=['author', 'quote','ka', 'sch','tags'], dtype={'quote': str})
+        self.csv_data['sch'] = pd.to_datetime(self.csv_data['sch'], format='%m/%d/%Y')
     
     def select_message(self):
-        msg = csv_data.loc[random.randint(0,len(csv_data.index))]
+        self.quote_ = self.csv_data.loc[random.randint(0,len(self.csv_data.index))]
     
     def notification(self):
         #creates a notification email
@@ -32,7 +31,7 @@ class Daily_Quote:
         msg['Subject'] = 'Daily Quote: ' + str(today)
         msg['From'] = gmail_user 
         msg['To'] = recipient 
-        msg.set_content(f'{msg.quote} \n {msg.author}')
+        msg.set_content(f'{self.quote_.quote} \n {self.quote_.author}')
         
         with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
             smtp.login(gmail_user, gmail_password) 
@@ -41,4 +40,7 @@ class Daily_Quote:
         print("Successfully sent notification email")
 
 if __name__ == "__main__":
-    Daily_Quote()
+    sesh = Daily_Quote()
+    sesh.load_data()
+    sesh.select_message()
+    sesh.notification()
