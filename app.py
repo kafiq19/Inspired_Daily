@@ -9,7 +9,7 @@ from jinja2 import Template
 import pandas as pd
 import psycopg2
 
-csv_data = pd.read_csv('quotes.csv', names=['author', 'quote','ka', 'sch','tags'])
+csv_data = pd.read_csv('quotes.csv', names=['author', 'quote','ka', 'sch','tags'], dtype={'quote': str})
 csv_data['sch'] = pd.to_datetime(csv_data['sch'], format='%m/%d/%Y')
 #csv_data['sch'] = csv_data['sch'].dt.date
 
@@ -41,7 +41,7 @@ def api_random():
     except Exception as e:
         return{e}
     
-    return msg.to_json(orient='records')
+    return msg.to_json(orient='records', force_ascii=False)
 
 @app.route('/api/qotd', methods=['GET'])
 def api_qotd():
@@ -55,7 +55,7 @@ def api_qotd():
     except Exception as e:
         return{e}
     
-    return msg.to_json(orient='records')
+    return msg.to_json(orient='records', force_ascii=False)
 
 @app.route('/api/ka', methods=['GET'])
 def api_ka():
@@ -69,7 +69,7 @@ def api_ka():
     except Exception as e:
         return{e}
     
-    return msg.to_json(orient='records')
+    return msg.to_json(orient='records', force_ascii=False)
 
 
 if __name__ == '__main__':
