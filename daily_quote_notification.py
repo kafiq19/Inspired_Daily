@@ -1,6 +1,5 @@
 import imghdr
 import time
-import schedule
 import datetime
 import smtplib
 from email.message import EmailMessage
@@ -39,9 +38,4 @@ def notification(self):
     print("Successfully sent notification email")
 
 if __name__ == "__main__":
-    schedule.every().day.at("19:00").do(Daily_Quote)
-    schedule.every(10).minutes.do(Daily_Quote)
-
-    while 1:
-        schedule.run_pending()
-        time.sleep(1)
+    Daily_Quote()
