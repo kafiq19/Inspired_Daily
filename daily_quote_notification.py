@@ -1,7 +1,10 @@
+import os
+import random
 import imghdr
 import time
 import datetime
 import smtplib
+import pandas as pd
 from email.message import EmailMessage
 
 class Daily_Quote:
