@@ -33,7 +33,7 @@ class Daily_Quote:
         msg['To'] = recipient 
         msg.set_content(f'{self.quote_.quote} \n {self.quote_.author} \n\n inspired-daily.com')
         
-        with smtplib.SMTP_SSL('smtp.mailgun.org', 465) as smtp:
+        with smtplib.SMTP_SSL('smtp.mailgun.org', 587) as smtp:
             smtp.login(gmail_user, gmail_password) 
             smtp.send_message(msg)
     
