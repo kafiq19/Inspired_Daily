@@ -24,7 +24,7 @@ class Daily_Quote:
         #creates a notification email
         today = datetime.date.today()
         gmail_user = 'khalfeen1@gmail.com'
-        gmail_password = 'B@l@nc3G2021'
+        gmail_password = 'jvofajjseaajkszt'
         recipient = ['tha_realist1990@hotmail.com']
         
         msg = EmailMessage()
@@ -33,7 +33,7 @@ class Daily_Quote:
         msg['To'] = recipient 
         msg.set_content(f'{self.quote_.quote} \n {self.quote_.author} \n\n inspired-daily.com')
         
-        with smtplib.SMTP_SSL('smtp.mailgun.org', 465) as smtp:
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
             smtp.login(gmail_user, gmail_password) 
             smtp.send_message(msg)
     
