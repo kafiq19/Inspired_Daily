@@ -3,8 +3,12 @@ import random
 from datetime import date
 
 import flask
+
+
 from flask import Flask #del
 from flask_mail import Mail, Message #del
+from mailjet_rest import Client #del
+
 from flask import request
 from flask import Flask, render_template
 from jinja2 import Template
@@ -74,21 +78,52 @@ def api_ka():
     return msg.to_json(orient='records', force_ascii=False)
 
 #--
-app.config['MAIL_SERVER']='smtp.gmail.com'
-app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'khalfeen1@gmail.com'
-app.config['MAIL_PASSWORD'] = 'B@l@nc3G2021'
-app.config['MAIL_USE_TLS'] = False
-app.config['MAIL_USE_SSL'] = True
-mail = Mail(app)
+# app.config['MAIL_SERVER']='smtp.gmail.com'
+# app.config['MAIL_PORT'] = 465
+# app.config['MAIL_USERNAME'] = 'khalfeen1@gmail.com'
+# app.config['MAIL_PASSWORD'] = 'B@l@nc3G2021'
+# app.config['MAIL_USE_TLS'] = False
+# app.config['MAIL_USE_SSL'] = True
+# mail = Mail(app)
 
+# app.config['MAIL_SERVER']='in-v3.mailjet.com'
+# app.config['MAIL_PORT'] = 587
+# app.config['MAIL_USERNAME'] = 'f07030d2fd98493fa136a747f8b6c735'
+# app.config['MAIL_PASSWORD'] = '*357cc679b5ad2d076b866d99b6bd048c'
+# # app.config['MAIL_USE_TLS'] = False
+# # app.config['MAIL_USE_SSL'] = True
+# mail = Mail(app)
+
+API_KEY = 'f07030d2fd98493fa136a747f8b6c735'
+API_SECRET = '357cc679b5ad2d076b866d99b6bd048c'
 
 @app.route('/email', methods=['GET'])
 def index():
-    msg = Message('Hello from the other side!', sender =   'khalfeen1@gmail.com', recipients = ['tha_realist1990@hotmail.com'])
-    msg.body = "Hey Paul, sending you this email from my Flask app, lmk if it works"
-    mail.send(msg)
-    return "Message sent!"
+    mailjet = Client(auth=(API_KEY, API_SECRET))
+    data = {
+        'Messages': [
+            {
+                "From": {
+                    "Email": "khalfeen1@gmail.com",
+                    "Name": "Mailjet API Image Test"
+            },
+                "To": [{
+                    "Email": "tha_realist1990@hotmail.com",
+                    "Name": "My Name"
+                }],
+                "Subject": "Can I insert an image inline?",
+                "TextPart": "Here's a random plot for your enjoyment!",
+            }
+        ]
+    }
+    result = mailjet.send.create(data=data)
+    print("Successfully sent notification email")
+    return "sent"
+    # print(result.json())
+    # msg = Message('Hello from the other side!', sender =   'khalfeen1@gmail.com', recipients = ['tha_realist1990@hotmail.com'])
+    # msg.body = "Hey Paul, sending you this email from my Flask app, lmk if it works"
+    # mail.send(msg)
+    # return "Message sent!"
 
 
 if __name__ == '__main__':
