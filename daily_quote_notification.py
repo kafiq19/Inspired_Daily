@@ -19,12 +19,12 @@ class Daily_Quote:
     
     def select_message(self):
         self.quote_ = self.csv_data.loc[random.randint(0,len(self.csv_data.index))]
-    
+
     def notification(self):
         #creates a notification email
         today = datetime.date.today()
         gmail_user = 'khalfeen1@gmail.com'
-        gmail_password = 'jvofajjseaajkszt'
+        gmail_password = '84A0AA97343F8A38D2CA935E7F8BCFCF952A'
         recipient = ['tha_realist1990@hotmail.com']
         
         msg = EmailMessage()
@@ -33,7 +33,7 @@ class Daily_Quote:
         msg['To'] = recipient 
         msg.set_content(f'{self.quote_.quote} \n {self.quote_.author} \n\n inspired-daily.com')
         
-        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+        with smtplib.SMTP('smtp.elasticemail.com', 2525) as smtp:
             smtp.login(gmail_user, gmail_password) 
             smtp.send_message(msg)
     
@@ -44,3 +44,55 @@ if __name__ == "__main__":
     sesh.load_data()
     sesh.select_message()
     sesh.notification()
+    
+
+# ----
+#     def notification(self):
+#         #creates a notification email
+#         today = datetime.date.today()
+#         app.config['MAIL_SERVER']='smtp.elasticemail.com'
+#         app.config['MAIL_PORT'] = 2525
+#         app.config['MAIL_USERNAME'] = 'khalfeen1@gmail.com'
+#         app.config['MAIL_PASSWORD'] = '84A0AA97343F8A38D2CA935E7F8BCFCF952A'
+#         # app.config['MAIL_USE_TLS'] = False
+#         # app.config['MAIL_USE_SSL'] = True
+#         mail = Mail(app)
+
+#         header_ = 'Daily Quote: ' + str(today)
+#         msg_ = f'{self.quote_.quote} \n {self.quote_.author} \n\n inspired-daily.com'
+#         from_ = 'khalfeen1@gmail.com'
+#         to_ = ['tha_realist1990@hotmail.com']
+        
+#         msg = Message(header_, sender = from_, recipients = to_)
+#         msg.body = msg_
+#         mail.send(msg)
+#         return "Message sent!"
+
+
+#         msg = EmailMessage()
+#         msg['Subject'] = 'Daily Quote: ' + str(today)
+#         msg['From'] = gmail_user 
+#         msg['To'] = recipient 
+#         msg.set_content()
+        
+#         with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+#             smtp.login(gmail_user, gmail_password) 
+#             smtp.send_message(msg)
+    
+#         print("Successfully sent notification email")
+
+# if __name__ == "__main__":
+#     sesh = Daily_Quote()
+#     sesh.load_data()
+#     sesh.select_message()
+#     sesh.notification()
+
+
+
+
+
+
+
+
+# if __name__ == '__main__':
+#     app.run(debug = True)

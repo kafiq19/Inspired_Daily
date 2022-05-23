@@ -1,32 +1,46 @@
-import flask
-from flask_mail import Mail, Message
+import os
+import random
+import imghdr
+import time
+import datetime
+import smtplib
+import pandas as pd
+from email.message import EmailMessage
 
-app = flask.Flask(__name__)
+class Daily_Quote:
 
-app.config['MAIL_SERVER']='smtp.gmail.com'
-app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'khalfeen1@gmail.com'
-app.config['MAIL_PASSWORD'] = 'jvofajjseaajkszt'
-app.config['MAIL_USE_TLS'] = False
-app.config['MAIL_USE_SSL'] = True
-mail = Mail(app)
+    def __init__(self):
+        self.csv_data = ''
+        self.quote = ''
 
-@app.route("/")
-def index():
-  msg = Message('Hello from the other side!', sender =   'khal@mailtrap.io', recipients = ['tha_realist1990@hotmail.com'])
-  msg.body = "Hey Paul, sending you this email from my Flask app, lmk if it works"
-  mail.send(msg)
-  return "Message sent!"
+    def load_data(self):
+        self.csv_data = pd.read_csv('quotes.csv', names=['author', 'quote','ka', 'sch','tags'], dtype={'quote': str})
+        self.csv_data['sch'] = pd.to_datetime(self.csv_data['sch'], format='%m/%d/%Y')
+    
+    def select_message(self):
+        self.quote_ = self.csv_data.loc[random.randint(0,len(self.csv_data.index))]
+    
+    def notification(self):
+        #creates a notification email
+        today = datetime.date.today()
+        gmail_user = 'khalfeen1@gmail.com'
+        gmail_password = 'jvofajjseaajkszt'
+        recipient = ['tha_realist1990@hotmail.com']
+        
+        msg = EmailMessage()
+        msg['Subject'] = 'Daily Quote: ' + str(today)
+        msg['From'] = gmail_user 
+        msg['To'] = recipient 
+        msg.set_content(f'{self.quote_.quote} \n {self.quote_.author} \n\n inspired-daily.com')
+        
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+            smtp.login(gmail_user, gmail_password) 
+            smtp.send_message(msg)
+    
+        print("Successfully sent notification email")
 
-if __name__ == '__main__':
-   app.run(debug = True)
-
-
-# def notification():
-#     #creates a notification email
-
-
-#     print("Successfully sent notification email")
-
-# if __name__ == "__main__":
-#     notification()
+if __name__ == "__main__":
+    sesh = Daily_Quote()
+    sesh.load_data()
+    sesh.select_message()
+    sesh.notification()
