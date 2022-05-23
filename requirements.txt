@@ -1,6 +1,7 @@
 flask
 Flask
 Flask_Mail
+mailjet_rest
 pandas
 gunicorn
 jinja2
