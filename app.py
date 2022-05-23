@@ -11,7 +11,7 @@ import pandas as pd
 import psycopg2
 
 csv_data = pd.read_csv('quotes.csv', names=['author', 'quote','ka', 'sch','tags'], dtype={'quote': str})
-csv_data['sch'] = pd.to_datetime(csv_data['sch'], format='%m/%d/%Y')
+#csv_data['sch'] = pd.to_datetime(csv_data['sch'], format='%m/%d/%Y')
 #csv_data['sch'] = csv_data['sch'].dt.date
 
 # dataBASE_URL = os.environ['csv_dataBASE_URL']
