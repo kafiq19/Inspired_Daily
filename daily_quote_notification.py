@@ -24,7 +24,7 @@ class Daily_Quote:
         #creates a notification email
         today = datetime.date.today()
         gmail_user = 'khalfeen1@gmail.com'
-        gmail_password = 'B@l@nc3G2021!@'
+        gmail_password = 'jvofajjseaajkszt'
         recipient = ['tha_realist1990@hotmail.com']
         
         msg = EmailMessage()
