@@ -1,5 +1,6 @@
 flask
-flask_mail
+Flask
+Flask_Mail
 pandas
 gunicorn
 jinja2

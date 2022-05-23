@@ -1,5 +1,5 @@
 import flask
-from flask_mail import Mail
+from flask_mail import Mail, Message
 
 app = flask.Flask(__name__)
 
