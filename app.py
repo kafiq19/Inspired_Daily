@@ -10,12 +10,8 @@ import pandas as pd
 import psycopg2
 
 csv_data = pd.read_csv('quotes.csv', names=['author', 'quote','ka', 'sch','tags'], dtype={'quote': str})
-#csv_data['sch'] = pd.to_datetime(csv_data['sch'], format='%m/%d/%Y')
-#csv_data['sch'] = csv_data['sch'].dt.date
-# replace 'nan' with 'unknown'
-
-# dataBASE_URL = os.environ['csv_dataBASE_URL']
-# conn = psycopg2.connect(csv_dataBASE_URL, sslmode='require')
+csv_data['sch'] = pd.to_datetime(csv_data['sch'], format='%m/%d/%Y')
+csv_data['author'] = csv_data['author'].fillna('Uknown Author')
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
@@ -28,10 +24,6 @@ def home():
     # msg = msg.to_json()
 
     return render_template('home.html', quote=quote , author=author)
-    #return Template('home.html').render(something="World")
-    
-    # return "<h1>Daily Inspired</h1> \
-    # <p>A curated selection of quotes to inspire your day. -KA</p>"
 
 @app.route('/api/random', methods=['GET'])
 def api_random():
@@ -74,35 +66,3 @@ def api_ka():
 
 #> set FLASK_ENV=development
 #> flask run
-
-
-
-
-
-''' CSV
-author, quote, type[joke, quote], KA[0,1],  
-
-'''
-
-    # return csv_data.loc[random.randint(0,len(csv_data.index))] 
-
-    # quote = request.args['random']
-    # try:
-    #     return csv_data.loc[random.randint(0,len(csv_data.index))]
-    # except KeyError:
-    #     return f'Invalid input ({csv_data.index.min()} - {csv_data.index.max()})'
-
-'''api.py:
-import flask
-
-app = flask.Flask(__name__)
-app.config["DEBUG"] = True
-
-
-@app.route('/', methods=['GET'])
-def home():
-    return "<h1>Distant Reading Archive</h1><p>This site is a prototype API for distant reading of science fiction novels.</p>"
-
-app.run()
-
-python api.py '''

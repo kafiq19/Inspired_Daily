@@ -24,8 +24,8 @@ class Daily_Quote:
         #creates a notification email
         today = datetime.date.today()
         gmail_user = 'khalfeen1@gmail.com'
-        gmail_password = '84A0AA97343F8A38D2CA935E7F8BCFCF952A'
-        recipient = ['tha_realist1990@hotmail.com', 'andreadprm@gmail.com']
+        gmail_password = 'C32CCE21E9412E56B9EE532C0FF0AC65A76E'
+        recipient = ['tha_realist1990@hotmail.com', 'krarfeen@gmail.com', 'andreadprm@gmail.com']
         
         msg = EmailMessage()
         msg['Subject'] = 'Daily Quote: ' + str(today)
