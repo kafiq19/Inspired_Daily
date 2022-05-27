@@ -24,7 +24,7 @@ class Daily_Quote:
         #creates a notification email
         today = datetime.date.today()
         gmail_user = 'khalfeen1@gmail.com'
-        gmail_password = 'C32CCE21E9412E56B9EE532C0FF0AC65A76E'
+        gmail_password = '82O1nNH6sFdjUXzw'
         recipient = ['tha_realist1990@hotmail.com', 'krarfeen@gmail.com', 'andreadprm@gmail.com']
         
         msg = EmailMessage()
@@ -33,7 +33,7 @@ class Daily_Quote:
         msg['To'] = recipient 
         msg.set_content(f'{self.quote_.quote} \n {self.quote_.author} \n\n inspired-daily.com')
         
-        with smtplib.SMTP('smtp.elasticemail.com', 2525) as smtp:
+        with smtplib.SMTP('smtp-relay.sendinblue.com', 587) as smtp:
             smtp.login(gmail_user, gmail_password) 
             smtp.send_message(msg)
     
