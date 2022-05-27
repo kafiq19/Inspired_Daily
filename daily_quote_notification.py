@@ -25,7 +25,7 @@ class Daily_Quote:
         today = datetime.date.today()
         gmail_user = 'khalfeen1@gmail.com'
         gmail_password = '82O1nNH6sFdjUXzw'
-        recipient = ['tha_realist1990@hotmail.com', 'krarfeen@gmail.com', 'andreadprm@gmail.com']
+        recipient = ['tha_realist1990@hotmail.com', 'andreadprm@gmail.com']
         
         msg = EmailMessage()
         msg['Subject'] = 'Daily Quote: ' + str(today)
