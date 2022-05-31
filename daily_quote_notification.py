@@ -30,7 +30,7 @@ class Daily_Quote:
         gmail_user = os.getenv("gmail_user")
         gmail_password = os.getenv("gmail_password")
         recipient = ['tha_realist1990@hotmail.com', 'andreadprm@gmail.com']
-        recipient = ['tha_realist1990@hotmail.com'] #dev
+        # recipient = ['tha_realist1990@hotmail.com'] #dev
         
         msg = EmailMessage()
         msg['Subject'] = 'Your Dose of Daily Inspiration: ' + str(today)
