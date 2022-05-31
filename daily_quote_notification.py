@@ -1,10 +1,11 @@
 import os
+import time
 import random
 import imghdr
-import time
-import datetime
 import smtplib
+import datetime
 import pandas as pd
+from dotenv import load_dotenv
 from email.message import EmailMessage
 
 class Daily_Quote:
@@ -12,6 +13,9 @@ class Daily_Quote:
     def __init__(self):
         self.csv_data = ''
         self.quote = ''
+
+    def configure(self):
+        load_dotenv()
 
     def load_data(self):
         self.csv_data = pd.read_csv('quotes.csv', names=['author', 'quote','ka', 'sch','tags'], dtype={'quote': str})
@@ -23,16 +27,34 @@ class Daily_Quote:
     def notification(self):
         #creates a notification email
         today = datetime.date.today()
-        gmail_user = 'khalfeen1@gmail.com'
-        gmail_password = '82O1nNH6sFdjUXzw'
+        gmail_user = os.getenv("gmail_user")
+        gmail_password = os.getenv("gmail_password")
         recipient = ['tha_realist1990@hotmail.com', 'andreadprm@gmail.com']
+        recipient = ['tha_realist1990@hotmail.com'] #dev
         
         msg = EmailMessage()
-        msg['Subject'] = 'Daily Quote: ' + str(today)
-        msg['From'] = gmail_user 
+        msg['Subject'] = 'Your Dose of Daily Inspiration: ' + str(today)
+        msg['From'] = f'Inspired Daily <{gmail_user}>'
         msg['To'] = recipient 
-        msg.set_content(f'{self.quote_.quote} \n {self.quote_.author} \n\n inspired-daily.com')
+        #msg.set_content(f'"{self.quote_.quote}" \n {self.quote_.author} \n\n inspired-daily.com')
         
+        msg.set_content("""\
+        <html>
+            <head></head>
+            <body>
+                <h1 style="color: #4485b8; text-align: center; font-size: 30px">🐤Inspired Daily</h1>
+                <p style="text-align: center;">Your Daily Source of Wisdom</p>
+                <div class="container">
+                  <div class="center">
+                    <p style="text-align: center; font-style: bold; font-size: 50px">""" +self.quote_.quote+"""</p>
+                    <p style="text-align: center; font-style: italic; font-size: 30px">""" +self.quote_.author+"""</p>
+                  </div>
+                </div>
+                <p style="text-align: center;"><em>&copy; inspired-daily.com</em></p>
+            </body>
+        </html>
+        """)
+
         with smtplib.SMTP('smtp-relay.sendinblue.com', 587) as smtp:
             smtp.login(gmail_user, gmail_password) 
             smtp.send_message(msg)
@@ -41,6 +63,7 @@ class Daily_Quote:
 
 if __name__ == "__main__":
     sesh = Daily_Quote()
+    sesh.configure()
     sesh.load_data()
     sesh.select_message()
     sesh.notification()
