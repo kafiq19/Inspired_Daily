@@ -64,5 +64,7 @@ def api_ka():
     
     return msg.to_json(orient='records', force_ascii=False)
 
+if __name__ == '__main__':
+    app.run()
 #> set FLASK_ENV=development
 #> flask run
