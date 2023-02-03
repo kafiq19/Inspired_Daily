@@ -29,7 +29,7 @@ class Daily_Quote:
         today = datetime.date.today()
         gmail_user = os.getenv("gmail_user")
         gmail_password = os.getenv("gmail_password")
-        recipient = ['tha_realist1990@hotmail.com', 'andreadprm@gmail.com']
+        recipient = ['tha_realist1990@hotmail.com', 'andreadprm@gmail.com', 'Mayakiao@gmail.com']
         # recipient = ['tha_realist1990@hotmail.com'] #dev
         
         msg = EmailMessage()
