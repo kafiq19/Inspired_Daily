@@ -29,14 +29,16 @@ class Daily_Quote:
         today = datetime.date.today()
         gmail_user = os.getenv("gmail_user")
         gmail_password = os.getenv("gmail_password")
-        recipient = ['tha_realist1990@hotmail.com', 'andreadprm@gmail.com', 'Mayakiao@gmail.com', 'tonerwarehouse1@yahoo.com',\
-                     'shazeedakhan27@gmail.com',  'anisaharfeen@gmail.com', 'yasmin_arfeen@hotmail.com', 'anshuk.chhibber@gmail.com', 'tha_realist1990@hotmail.com']
-        # recipient = ['tha_realist1990@hotmail.com'] #dev
+        recipient_def = ['info@khalfeenmedia.com'] #default
+        recipient = ['k.a@unb.ca', 'andreadprm@gmail.com', 'Mayakiao@gmail.com', 'tonerwarehouse1@yahoo.com',\
+                     'shazeedakhan27@gmail.com',  'anisaharfeen@gmail.com', 'yasmin_arfeen@hotmail.com', 'anshuk.chhibber@gmail.com', 'ara952@gmail.com']
+        #recipient = ['tha_realist1990@hotmail.com', 'gecewex275@qqhow.com'] #dev
         
         msg = EmailMessage()
         msg['Subject'] = 'Your Dose of Daily Inspiration: ' + str(today)
         msg['From'] = f'Inspired Daily <{gmail_user}>'
-        msg['To'] = recipient 
+        msg['To'] = recipient_def
+        msg['Bcc'] = recipient
         #msg.set_content(f'"{self.quote_.quote}" \n {self.quote_.author} \n\n inspired-daily.com')
         
         msg.set_content("""\
@@ -47,7 +49,7 @@ class Daily_Quote:
                 <p style="text-align: center;">Your Daily Source of Wisdom</p>
                 <div class="container">
                   <div class="center">
-                    <p style="text-align: center; font-style: bold; font-size: 50px">""" +self.quote_.quote+"""</p>
+                    <p style="text-align: center; font-style: bold; font-size: 40px">""" +self.quote_.quote+"""</p>
                     <p style="text-align: center; font-style: italic; font-size: 30px">""" +self.quote_.author+"""</p>
                   </div>
                 </div>
