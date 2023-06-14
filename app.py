@@ -1,7 +1,7 @@
 import os
 import random
 from datetime import date
-
+import daily_quote_notification as id_email
 import flask
 from flask import request
 from flask import Flask, render_template
@@ -64,8 +64,20 @@ def api_ka():
     
     return msg.to_json(orient='records', force_ascii=False)
 
+def main_app():
+    id_email = Daily_Quote()
+    id_email.configure()
+    id_email.load_data()
+    id_email.select_message()
+    id_email.notification()
+
 if __name__ == '__main__':
     app.run()
+    schedule.every(3).minutes.do(main_app)
+    
+    while True:
+        schedule.run_pending()
+        time.sleep(5)
 
 #> set FLASK_ENV=development
 #> flask run

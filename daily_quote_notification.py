@@ -4,6 +4,7 @@ import random
 import imghdr
 import smtplib
 import datetime
+import schedule
 import pandas as pd
 from dotenv import load_dotenv
 from email.message import EmailMessage
@@ -30,8 +31,10 @@ class Daily_Quote:
         gmail_user = os.getenv("gmail_user")
         gmail_password = os.getenv("gmail_password")
         recipient_def = ['info@khalfeenmedia.com'] #default
-        recipient = ['k.a@unb.ca', 'andreadprm@gmail.com', 'Mayakiao@gmail.com', 'tonerwarehouse1@yahoo.com',\
-                     'shazeedakhan27@gmail.com',  'anisaharfeen@gmail.com', 'yasmin_arfeen@hotmail.com', 'anshuk.chhibber@gmail.com', 'ara952@gmail.com']
+        recipient = ['k.a@unb.ca', 'andreadprm@gmail.com', 'Mayakiao@gmail.com', \
+                    'tonerwarehouse1@yahoo.com', 'shazeedakhan27@gmail.com', \
+                    'anisaharfeen@gmail.com', 'yasmin_arfeen@hotmail.com',\
+                    'anshuk.chhibber@gmail.com', 'ara952@gmail.com']
         #recipient = ['tha_realist1990@hotmail.com', 'gecewex275@qqhow.com'] #dev
         
         msg = EmailMessage()
@@ -64,9 +67,12 @@ class Daily_Quote:
     
         print("Successfully sent notification email")
 
-if __name__ == "__main__":
+def main_app():
     sesh = Daily_Quote()
     sesh.configure()
     sesh.load_data()
     sesh.select_message()
-    sesh.notification()
+    sesh.notification()  
+
+if __name__ == "__main__":
+    main_app()
