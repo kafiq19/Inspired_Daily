@@ -7,4 +7,3 @@ gunicorn
 jinja2
 psycopg2-binary
 python-dotenv
-schedule

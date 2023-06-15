@@ -4,7 +4,6 @@ import random
 import imghdr
 import smtplib
 import datetime
-import schedule
 import pandas as pd
 from dotenv import load_dotenv
 from email.message import EmailMessage
