@@ -73,11 +73,6 @@ def main_app():
 
 if __name__ == '__main__':
     app.run()
-    schedule.every(3).minutes.do(main_app)
-    
-    while True:
-        schedule.run_pending()
-        time.sleep(5)
 
 #> set FLASK_ENV=development
 #> flask run

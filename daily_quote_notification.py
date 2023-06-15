@@ -35,7 +35,7 @@ class Daily_Quote:
                     'tonerwarehouse1@yahoo.com', 'shazeedakhan27@gmail.com', \
                     'anisaharfeen@gmail.com', 'yasmin_arfeen@hotmail.com',\
                     'anshuk.chhibber@gmail.com', 'ara952@gmail.com']
-        #recipient = ['tha_realist1990@hotmail.com', 'gecewex275@qqhow.com'] #dev
+        recipient = ['tha_realist1990@hotmail.com', 'gecewex275@qqhow.com'] #dev
         
         msg = EmailMessage()
         msg['Subject'] = 'Your Dose of Daily Inspiration: ' + str(today)
