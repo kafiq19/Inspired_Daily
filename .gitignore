@@ -1,0 +1,6 @@
+.env
+environment.py
+commands.txt
+ID.log
+id_rsa.ppk
+recipients.json
