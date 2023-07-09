@@ -102,12 +102,6 @@ class Daily_Quote:
         gmail_password = os.getenv("gmail_password")
         recipient_def = ['info@khalfeenmedia.com'] #default
         recipient = self.recipients
-        # recipient = [\
-        #     'k.a@unb.ca', 'andreadprm@gmail.com', 'Mayakiao@gmail.com',\
-        #     'tonerwarehouse1@yahoo.com', 'shazeedakhan27@gmail.com','anisaharfeen@gmail.com',\
-        #     'yasmin_arfeen@hotmail.com', 'anshuk.chhibber@gmail.com','ara952@gmail.com'\
-        #     ]
-        # recipient = ['tha_realist1990@hotmail.com'] #dev
         
         msg = EmailMessage()
         msg['Subject'] = 'Your Dose of Daily Inspiration: ' + str(today)
